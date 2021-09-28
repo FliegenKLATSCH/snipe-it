@@ -370,8 +370,7 @@ class AssetsController extends Controller
     public function showBySerial(Request $request, $serial)
     {
         $this->authorize('index', Asset::class);
-        if ($assets = Asset::with('assetstatus')->with('assignedTo')
-            ->withTrashed()->where('serial',$serial)->get()) {
+        if ($assets = Asset::with('assetstatus')->with('assignedTo')->where('serial',$serial)->get()) {
                 return (new AssetsTransformer)->transformAssets($assets, $assets->count());
         }
         return response()->json(Helper::formatStandardApiResponse('error', null, 'Asset not found'), 200);
